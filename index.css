@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "Koruri";
+  src: local('Koruri-Light'),
+  url('https://media.h3z.jp/fonts/Koruri-Light.woff2') format('woff2'),
+  url('https://media.h3z.jp/fonts/Koruri-Light.woff') format('woff'),
+  url('https://media.h3z.jp/fonts/Koruri-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Koruri";
+  src: local('Koruri-Regular'),
+  url('https://media.h3z.jp/fonts/Koruri-Regular.woff2') format('woff2'),
+  url('https://media.h3z.jp/fonts/Koruri-Regular.woff') format('woff'),
+  url('https://media.h3z.jp/fonts/Koruri-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Koruri";
+  src: local('Koruri-Semibold'),
+  url('https://media.h3z.jp/fonts/Koruri-Semibold.woff2') format('woff2'),
+  url('https://media.h3z.jp/fonts/Koruri-Semibold.woff') format('woff'),
+  url('https://media.h3z.jp/fonts/Koruri-Semibold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Koruri";
+  src: local('Koruri-Bold'),
+  url('https://media.h3z.jp/fonts/Koruri-Bold.woff2') format('woff2'),
+  url('https://media.h3z.jp/fonts/Koruri-Bold.woff') format('woff'),
+  url('https://media.h3z.jp/fonts/Koruri-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Koruri";
+  src: local('Koruri-Extrabold'),
+  url('https://media.h3z.jp/fonts/Koruri-Extrabold.woff2') format('woff2'),
+  url('https://media.h3z.jp/fonts/Koruri-Extrabold.woff') format('woff'),
+  url('https://media.h3z.jp/fonts/Koruri-Extrabold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+    font-family: "Koruri", Sans-Serif;
+    font-weight: 400;
+    font-style: normal;
+	margin:0;
+	padding:0;
+	font-size:100%;
+	background:#fff;
+	line-height:1.6;
+	-webkit-text-size-adjust:100%;
+}
+
+a {text-decoration:none;}
+a:link {color:#13d;}
+a:visited {color:#808;}
+a:hover {text-decoration:underline;}
+
+a[target="_blank"] {
+  background-image: url('https://media.h3z.jp/img/external-link.png');
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 12px;
+  display: inline-block;
+}
+
+h2 {margin:2em 0 0.5em 0;padding:0;font-size:130%;border:solid #ddd;border-width:0 0 1px 0;}
+h3 {margin:2em 0 0 0;padding:0;font-size:115%;}
+div > h2:first-child {margin:0 0 0.5em 0;}
+
+table {border-collapse:collapse;word-break:break-all;}
+td {border:1px solid #aaa;padding:6px;}
+
+.ex_table_index tr td:nth-child(1) {background:#fee;text-align:center;}
+.ex_table_log tr:nth-child(1) {background:#fff6ee;text-align:center;}
+.ex_table_log td {text-align:center;}
+.ex_table_log tr:nth-child(2) td:nth-child(1) {background:#fdd;}
+.ex_table_log tr:nth-child(2) td:nth-child(2) {background:#dfd;}
+.ex_table_log tr:nth-child(2) td:nth-child(3) {background:#adf;}
+
+pre {font-family:Courier,Monospace;line-height:normal;overflow:auto;}
+
+#ex_chart {max-width:1000px;max-height:500px;}
+
+
+
+/* page */
+#page_header {padding:3px 8px;font-size:130%;background:#000;color:#fff;}
+
+.page_menu {
+	position:-webkit-sticky;
+	position:sticky;
+	top:0;
+	background:#eee;
+	border:solid #555;
+	border-width:0 0 1px 0;
+}
+
+.page_menu ul {display:flex;flex-direction:row;flex-wrap:wrap;margin:0;padding:0;list-style:none;}
+.page_menu li {margin:0 6px;padding:6px;}
+
+#page_main {padding:16px 8px 30px 8px;}
+#page_footer {padding:16px 8px;border:solid #ddd;border-width:1px 0 0 0;}
