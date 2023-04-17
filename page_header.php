@@ -15,17 +15,15 @@ Nostr Ranking
 </header>
 
 <nav class="page_menu">
+<form name="form1" method="get" action=".">
 <ul>
 <li><a href="./">Home</a></li>
-<li><a href="./all1.php">All1</a></li>
-<li><a href="./all7.php">All7</a></li>
-<li><a href="./daily1.php">Daily1</a></li>
-<li><a href="./daily7.php">Daily7</a></li>
-<li><a href="./weekly1.php">Weekly1</a></li>
-<li><a href="./weekly7.php">Weekly7</a></li>
-<li><a href="./monthly1.php">Monthly1</a></li>
-<li><a href="./monthly7.php">Monthly7</a></li>
+<li><input type="date" name="date" min="2023-02-06" value="<?php echo date('Y-m-d', strtotime('-1 day')); ?>" /></li>
+<li>All<input type="radio" name="ranking" value="all" checked /> Daily<input type="radio" name="ranking" value="daily" /> Weekly<input type="radio" name="ranking" value="weekly" /> Monthly<input type="radio" name="ranking" value="monthly" /></li>
+<li>Post<input type="radio" name="kind" value="1" checked /> Repost<input type="radio" name="kind" value="6" /> Reacticon<input type="radio" name="kind" value="7" /></li>
+<li><input type="submit" value="View" /></li>
 </ul>
+</form>
 </nav>
 
 <div id="page_main">
