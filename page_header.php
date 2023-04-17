@@ -18,9 +18,26 @@ Nostr Ranking
 <form name="form1" method="get" action=".">
 <ul>
 <li><a href="./">Home</a></li>
-<li><input type="date" name="date" min="2023-02-06" value="<?php echo date('Y-m-d', strtotime('-1 day')); ?>" /></li>
-<li>All<input type="radio" name="ranking" value="all" checked /> Daily<input type="radio" name="ranking" value="daily" /> Weekly<input type="radio" name="ranking" value="weekly" /> Monthly<input type="radio" name="ranking" value="monthly" /></li>
-<li>Post<input type="radio" name="kind" value="1" checked /> Repost<input type="radio" name="kind" value="6" /> Reacticon<input type="radio" name="kind" value="7" /></li>
+<li><input type="date" name="date" min="2023-02-06" value="<?php if (isset($_GET['date'])) { echo $_GET['date']; } else { echo date('Y-m-d', strtotime('-1 day')); } ?>" /></li>
+<?php
+	if ( $_GET['ranking'] == 'daily' ) {
+		echo '<li>All<input type="radio" name="ranking" value="all" /> Daily<input type="radio" name="ranking" value="daily" checked /> Weekly<input type="radio" name="ranking" value="weekly" /> Monthly<input type="radio" name="ranking" value="monthly" /></li>';
+	} else if ( $_GET['ranking'] == 'weekly' ) {
+		echo '<li>All<input type="radio" name="ranking" value="all" /> Daily<input type="radio" name="ranking" value="daily" /> Weekly<input type="radio" name="ranking" value="weekly" checked /> Monthly<input type="radio" name="ranking" value="monthly" /></li>';
+	} else if ( $_GET['ranking'] == 'monthly' ) {
+		echo '<li>All<input type="radio" name="ranking" value="all" /> Daily<input type="radio" name="ranking" value="daily" /> Weekly<input type="radio" name="ranking" value="weekly" /> Monthly<input type="radio" name="ranking" value="monthly" checked /></li>';
+	} else {
+		echo '<li>All<input type="radio" name="ranking" value="all" checked /> Daily<input type="radio" name="ranking" value="daily" /> Weekly<input type="radio" name="ranking" value="weekly" /> Monthly<input type="radio" name="ranking" value="monthly" /></li>';
+	}
+
+	if ( $_GET['kind'] == '6' ) {
+		echo '<li>Post<input type="radio" name="kind" value="1" /> Repost<input type="radio" name="kind" value="6" checked /> Reacticon<input type="radio" name="kind" value="7" /></li>';
+	} else if ( $_GET['kind'] == '7' ) {
+		echo '<li>Post<input type="radio" name="kind" value="1" /> Repost<input type="radio" name="kind" value="6" /> Reacticon<input type="radio" name="kind" value="7" checked /></li>';
+	} else {
+		echo '<li>Post<input type="radio" name="kind" value="1" checked /> Repost<input type="radio" name="kind" value="6" /> Reacticon<input type="radio" name="kind" value="7" /></li>';
+	}
+?>
 <li><input type="submit" value="View" /></li>
 </ul>
 </form>
