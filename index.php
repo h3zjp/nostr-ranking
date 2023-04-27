@@ -3,6 +3,9 @@
 	# ヘッダーファイル読み込み
 	require('./page_header.php');
 
+	# bech32 ライブラリ読み込み
+	require('./bech32.php');
+
 	# username ファイル読み込み
 	$file2 = "./data/username.csv";
 
@@ -198,9 +201,17 @@
 		            $name = $data[$i][0];
 		        }
 
+			$dec = [];
+			$split = str_split($data[$i][0], 2);
+			foreach ($split as $item) {
+				$dec[] = hexdec($item);
+			}
+			$bytes = BitWasp\Bech32\convertBits($dec, count($dec), 8, 5);
+			$npub = BitWasp\Bech32\encode('npub', $bytes);
+
 			echo "	<tr>\n";
 			echo "		<td style=\"background-color:#" . substr($data[$i][0], 1, 6) . ";\">&emsp;</span></td>\n";
-			echo "		<td>" . $name . "</td>\n";
+			echo '		<td><a href="https://nostx.shino3.net/' . $npub . '" target="_blank">' . $name . "</a></td>\n";
 			echo "		<td>" . $data[$i][1] . "</td>\n";
 			echo "	</tr>\n";
 		}
