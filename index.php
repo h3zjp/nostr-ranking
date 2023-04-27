@@ -11,6 +11,11 @@
 データは毎日 0:02 に更新されます。(月間は 1 日の 0:02 に更新)</p>
 <p>※集計で使用する日時は DB の first_seen を採用しております。<br />
 ※合計ランキングと月間ランキングは 100 以上の数値のみ、週間ランキングは 20 以上の数値のみをカウントしております。</p>
+
+<h2>Ranking bot</h2>
+<p>毎日 0:02 に、前日のランキングを自動的に呟く bot を運用中です。<br />
+@nostr-ranking.h3z.jp (npub1nay0tzxrrpfau6x0tgzv9adcv4ml5l8k5lm7nvex5t07j05fp9psqdggwe)<br />
+をフォローしてみて下さい。</p>
 EOM;
 
 	# GET リクエストに ranking が入っているか
@@ -33,14 +38,14 @@ EOM;
 
 			$date_check1 = strtotime($req_date);
 			$date_check2 = strtotime('2023-02-06');
-			$date_check3 = strtotime(date('Y-m-d'));
+			$date_check3 = strtotime(date('Y-m-d', strtotime('-1 day')));
 
 			if ($date_check1 < $date_check2) {
 				echo "<p>エラー：2023-02-06 よりも過去の日付が指定されています</p>\n";
 				require('./page_footer.php');
 				exit;
 			}
-			if ($date_check1 >= $date_check3) {
+			if ($date_check1 > $date_check3) {
 				echo "<p>エラー：" . date('Y-m-d', strtotime('-1 day')) . " よりも未来の日付が指定されています</p>\n";
 				require('./page_footer.php');
 				exit;
