@@ -3,26 +3,11 @@
 	# ヘッダーファイル読み込み
 	require('./page_header.php');
 
-	# About ページ
-	$about_html = <<< EOM
-<h2>About</h2>
-<p>このページでは、nostr.h3z.jp の投稿数 (kind 1)、リポスト数 (kind 6)、リアクション数 (kind 7) のランキングを掲載しております。<br />
-合計、日間、週間、月間 の 4 項目で表示しております。<br />
-データは毎日 0:02 に更新されます。(月間は 1 日の 0:02 に更新)</p>
-<p>※集計で使用する日時は DB の first_seen を採用しております。<br />
-※合計ランキングと月間ランキングは 100 以上の数値のみ、週間ランキングは 20 以上の数値のみをカウントしております。</p>
-
-<h2>Ranking bot</h2>
-<p>毎日 0:02 に、前日のランキングを自動的に呟く bot を運用中です。<br />
-@nostr-ranking.h3z.jp (npub1nay0tzxrrpfau6x0tgzv9adcv4ml5l8k5lm7nvex5t07j05fp9psqdggwe)<br />
-をフォローしてみて下さい。</p>
-EOM;
+	# username ファイル読み込み
+	$file2 = "./data/username.csv";
 
 	# GET リクエストに ranking が入っているか
 	if (isset($_GET['ranking'])) {
-
-		# username ファイル読み込み
-		$file2 = "./data/username.csv";
 
 		# 日付指定を確認
 		if (isset($_GET['date'])) {
@@ -196,7 +181,7 @@ EOM;
 		echo "<table>\n";
 		echo "	<tr>\n";
 		echo "		<td></td>\n";
-		echo "		<td>name</td>\n";
+		echo "		<td>name / hex</td>\n";
 		echo "		<td>count</td>\n";
 		echo "	</tr>\n";
 
@@ -223,6 +208,31 @@ EOM;
 		echo "</table>\n";
 
 	} else {
+
+		$mfile2 = fopen($file2, 'r');
+		$mcsv2 = fgetcsv($mfile2, 1);
+		$mget_time2 = $mcsv2[0];
+		$name_updated = substr($mget_time2, strpos($mget_time2, ":") + 2);
+		fclose($mfile2);
+
+		# About ページ
+		$about_html = <<< EOM
+<h2>About</h2>
+<p>このページでは、nostr.h3z.jp の投稿数 (kind 1)、リポスト数 (kind 6)、リアクション数 (kind 7) のランキングを掲載しております。<br />
+合計、日間、週間、月間 の 4 項目で表示しております。<br />
+データは毎日 0:02 に更新されます。(月間は 1 日の 0:02 に更新)</p>
+<p>※ソースは DB 上のデータです。毎日 0:01 に SQL クエリを叩いて情報を取得しております。<br />
+※集計で使用する日時は event_created_at レコードではなく first_seen レコードのデータを採用しております。<br />
+※合計ランキングと月間ランキングは 100 以上の数値のみ、週間ランキングは 20 以上の数値のみをカウントしております。</p>
+※名前情報はキャッシュされたものを使用しております。取得できなかった場合、hex が表示されます。<br />
+Name cache last modified: {$name_updated}</p>
+
+<h2>Ranking bot</h2>
+<p>毎日 0:02 に、前日のランキングを自動的に呟く bot を運用中です。<br />
+<a href="https://nostx.shino3.net/npub1nay0tzxrrpfau6x0tgzv9adcv4ml5l8k5lm7nvex5t07j05fp9psqdggwe" target="_blank">@nostr-ranking.h3z.jp</a> (npub1nay0tzxrrpfau6x0tgzv9adcv4ml5l8k5lm7nvex5t07j05fp9psqdggwe)<br />
+をフォローしてみて下さい。</p>
+<p>アイコン画像：<a href="https://nostx.shino3.net/npub14urhscvhsf4z784aw8ce6ym6amt5adxgu4ktx237lm5zlzvwyu2q4s7scd" target="_blank">mekamakrd@gijirail.com</a></p>
+EOM;
 
 		echo $about_html;
 
