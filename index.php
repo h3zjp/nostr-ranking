@@ -180,15 +180,12 @@
 		}
 		fclose($mfile2);
 
+		# Daily、kind 1 の場合のみ DAU を表示
 		if ($_GET['ranking'] == 'daily' && $_GET['kind'] == '1') {
-
 			$title3 = "(DAU：" . $count . ")";
 			echo '<h2>' . $title1 . $title2 . "ランキング " . $title3 . "</h2>\n";
-
 		} else {
-
 			echo '<h2>' . $title1 . $title2 . "ランキング</h2>\n";
-
 		}
 
 		echo "<table>\n";
