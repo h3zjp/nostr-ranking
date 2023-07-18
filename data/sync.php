@@ -44,6 +44,7 @@ file_put_contents($file_folder . 'weekly/1/' . $now_date . '.csv', $data_weekly1
 file_put_contents($file_folder . 'weekly/6/' . $now_date . '.csv', $data_weekly6);
 file_put_contents($file_folder . 'weekly/7/' . $now_date . '.csv', $data_weekly7);
 if (date("j") == 1) {
+	$now_date = date('Y-m-d');
 	file_put_contents($file_folder . 'monthly/1/' . $now_date . '.csv', $data_monthly1);
 	file_put_contents($file_folder . 'monthly/6/' . $now_date . '.csv', $data_monthly6);
 	file_put_contents($file_folder . 'monthly/7/' . $now_date . '.csv', $data_monthly7);
