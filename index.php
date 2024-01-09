@@ -17,6 +17,7 @@
 
 			$req_date = ($_GET['date']);
 
+			# 不正な日付チェック
 			$date_check = explode('-', $req_date);
 			if (checkdate($date_check[1], $date_check[2] , $date_check[0]) === false) {
 				echo "<p>エラー：不正な日付です</p>\n";
@@ -27,12 +28,10 @@
 			$date_check1 = strtotime($req_date);
 			$date_check2 = strtotime('2023-02-06');
 			$date_check3 = strtotime(date('Y-m-d', strtotime('-1 day')));
+			$date_check4 = strtotime('2023-08-18');
+			$date_check5 = strtotime('2023-09-14');
 
-			if ($date_check1 < $date_check2) {
-				echo "<p>エラー：2023-02-06 よりも過去の日付が指定されています</p>\n";
-				require('./page_footer.php');
-				exit;
-			}
+			# 未来の日付かどうか (未来だったらNG)
 			if ($date_check1 > $date_check3) {
 				echo "<p>エラー：" . date('Y-m-d', strtotime('-1 day')) . " よりも未来の日付が指定されています</p>\n";
 				require('./page_footer.php');
@@ -46,7 +45,7 @@
 
 			if ($date_check1 == $date_check3 && date("H") == 00 && date("i") == 00 || $date_check1 == $date_check3 && date("H") == 00 && date("i") == 01) {
 				$req_date = date('Y-m-d', strtotime('-2 day'));
-			} else{
+			} else {
 				$req_date = date('Y-m-d', strtotime('-1 day'));
 			}
 		}
@@ -54,6 +53,19 @@
 		# リクエスト種別を確認
 		# 日別
 		if ($_GET['ranking'] == 'daily') {
+
+			# 指定された日付が 2023-02-06 より過去かどうか (過去だったらNG)
+			if ($date_check1 < $date_check2) {
+				echo "<p>エラー：2023-02-06 よりも過去の日付が指定されています</p>\n";
+				require('./page_footer.php');
+				exit;
+			}
+			# 指定された日付が 2023-08-18 から 2023-09-13 の間かどうか (間だったらNG)
+			if ($date_check1 >= $date_check4 && $date_check1 < $date_check5) {
+				echo "<p>エラー：2023-08-18 から 2023-09-13 は指定できません</p>\n";
+				require('./page_footer.php');
+				exit;
+			}
 
 			$title1 = date('Y年m月d日', strtotime($req_date)) . "の";
 
@@ -76,16 +88,23 @@
 		# 週別
 		} else if ($_GET['ranking'] == 'weekly') {
 
-			$date_check1 = strtotime($req_date);
-			$date_check2 = strtotime('2023-02-12');
+			$date_check6 = strtotime('2023-02-12');
+			$date_check7 = strtotime('2023-09-20');
 
-			if ($date_check1 < $date_check2) {
+			# 指定された日付が 2023-02-12 より過去かどうか (過去だったらNG)
+			if ($date_check1 < $date_check6) {
 				echo "<p>エラー：2023-02-12 よりも過去の日付が指定されています</p>\n";
 				require('./page_footer.php');
 				exit;
 			}
+			# 指定された日付が 2023-08-18 から 2023-09-19 の間かどうか (間だったらNG)
+			if ($date_check1 >= $date_check4 && $date_check1 < $date_check7) {
+				echo "<p>エラー：2023-08-18 から 2023-09-19 は指定できません</p>\n";
+				require('./page_footer.php');
+				exit;
+			}
 
-			$title1 = date('Y年m月d日', strtotime($req_date)) . "から過去1週間の";
+			$title1 = date('Y年m月d日', $date_check1) . "から過去1週間の";
 
 			# kind 6
 			if ($_GET['kind'] == '6') {
@@ -106,16 +125,20 @@
 		# 月別
 		} else if ($_GET['ranking'] == 'monthly') {
 
-			$req_date_tmp = strtotime($req_date);
-			$req_date = date('Y-m-d', strtotime('first day of this month', $req_date_tmp));
-			$req_date_tmp2 = strtotime($req_date);
-			$req_date2 = date('Y年m月', strtotime('-1 month', $req_date_tmp2));
+			$req_date = date('Y-m-d', strtotime('first day of this month', $date_check1));
+			$req_date2 = date('Y年m月', $date_check1);
 
-			$date_check1 = $req_date_tmp;
-			$date_check2 = strtotime('2023-03-01');
+			$date_check8 = strtotime('2023-02-01');
 
-			if ($date_check1 < $date_check2) {
-				echo "<p>エラー：2023-03-01 よりも過去の日付が指定されています</p>\n";
+			# 指定された日付が2023年02月より過去かどうか (過去だったらNG)
+			if ($date_check1 < $date_check8) {
+				echo "<p>エラー：2023年2月よりも過去の日付が指定されています</p>\n";
+				require('./page_footer.php');
+				exit;
+			}
+			# 指定された日付が2023年08月かどうか (8月だったらNG)
+			if ($req_date == '2023-08-01') {
+				echo "<p>エラー：2023年8月は指定できません</p>\n";
 				require('./page_footer.php');
 				exit;
 			}
@@ -141,9 +164,21 @@
 		# それ以外 (累計)
 		} else {
 
-			$req_date_tmp = strtotime($req_date);
-			$req_date2 = date('Y-m-d', strtotime('+1 day', $req_date_tmp));
-			$title1 = date('Y年m月d日 0時', strtotime($req_date2)) . "時点の累計";
+			# 指定された日付が 2023-02-06 より過去かどうか (過去だったらNG)
+			if ($date_check1 < $date_check2) {
+				echo "<p>エラー：2023-02-06 よりも過去の日付が指定されています</p>\n";
+				require('./page_footer.php');
+				exit;
+			}
+			# 指定された日付が 2023-08-18 から 2023-09-13 の間かどうか (間だったらNG)
+			if ($date_check1 >= $date_check4 && $date_check1 < $date_check5) {
+				echo "<p>エラー：2023-08-18 から 2023-09-13 は指定できません</p>\n";
+				require('./page_footer.php');
+				exit;
+			}
+
+			$req_date3 = date('Y-m-d', strtotime('+1 day', $date_check1));
+			$title1 = date('Y年m月d日 0時', strtotime($req_date3)) . "時点の累計";
 
 			# kind 6
 			if ($_GET['kind'] == '6') {
@@ -236,7 +271,8 @@
 		# About ページ
 		$about_html = <<< EOM
 <h2>About</h2>
-<p>このページでは、nostr.h3z.jp の投稿数 (kind 1)、リポスト数 (kind 6)、リアクション数 (kind 7) のランキングを掲載しております。<br />
+<p>このページでは、nostr-relay.h3z.jp の投稿数 (kind 1)、リポスト数 (kind 6)、リアクション数 (kind 7) のランキングを掲載しております。<br />
+(2023-02-06 から 2023-08-17 までは nostr.h3z.jp のランキングとなっております)<br />
 合計、日間、週間、月間 の 4 項目で表示しております。<br />
 データは毎日 0:02 に更新されます。(月間は 1 日の 0:02 に更新)</p>
 <p>※ソースは DB 上のデータです。毎日 0:01 に SQL クエリを叩いて情報を取得しております。<br />
