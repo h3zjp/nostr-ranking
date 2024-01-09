@@ -1,6 +1,6 @@
 <?php
 
-$url = 'https://example.com/stats/';
+$url = 'https://hm-nrm.h3z.jp/nostr-stats/';
 
 $file_all1 = $url . 'ranking-all1.csv';
 $file_all6 = $url . 'ranking-all6.csv';
@@ -44,7 +44,7 @@ file_put_contents($file_folder . 'weekly/1/' . $now_date . '.csv', $data_weekly1
 file_put_contents($file_folder . 'weekly/6/' . $now_date . '.csv', $data_weekly6);
 file_put_contents($file_folder . 'weekly/7/' . $now_date . '.csv', $data_weekly7);
 if (date("j") == 1) {
-	$now_date = date('Y-m-d');
+	$now_date = date('Y-m-d', strtotime('-1 month'));
 	file_put_contents($file_folder . 'monthly/1/' . $now_date . '.csv', $data_monthly1);
 	file_put_contents($file_folder . 'monthly/6/' . $now_date . '.csv', $data_monthly6);
 	file_put_contents($file_folder . 'monthly/7/' . $now_date . '.csv', $data_monthly7);
